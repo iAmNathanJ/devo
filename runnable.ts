@@ -11,14 +11,14 @@ export type Runnable = {
 const cache = new Map<string, Runnable>();
 
 function task(name: string, cmd: string): Runnable {
-  const task = {
+  const t = {
     name,
     cmd,
     type: "task",
     run: async () => runProcess({ name, cmd })
   };
-  cache.set(name, task);
-  return task;
+  cache.set(name, t);
+  return t;
 }
 
 function series(name: string, runnables: (Runnable | string)[]) {
@@ -57,11 +57,12 @@ function parallel(name: string, runnables: (Runnable | string)[]) {
 
 async function runProcess(process: ProcessParams) {
   const proc = new Process(process);
+
   await proc
     .on("stdout", render)
+    .on("stderr", render)
     .start()
     .complete();
-  proc.off("stdout", render);
 }
 
 export { task, series, parallel, cache };

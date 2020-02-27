@@ -1,1 +1,2 @@
-export * from "./task.ts";
+export * from "./runnable.ts";
+export { setCustomRenderer } from "./render.ts";
