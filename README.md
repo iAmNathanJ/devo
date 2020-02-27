@@ -2,14 +2,10 @@
 
 A task runner for [Deno].
 
-## Install / Import
+## Install
 
 ```sh
 $ deno install --allow-run --allow-read devo https://cdn.jsdelivr.net/gh/iamnathanj/devo@v1.0.0/cli.ts
-```
-
-```ts
-import { task, parallel, series } from "https://cdn.jsdelivr.net/gh/iamnathanj/devo@v1.0.0/mod.ts";
 ```
 
 ## Usage
@@ -18,6 +14,8 @@ Create a task file in the root of your project called `devo.ts`.
 
 ```ts
 // devo.ts
+
+import { task, parallel, series } from "https://cdn.jsdelivr.net/gh/iamnathanj/devo@v1.0.0/mod.ts";
 
 task("rollup", "npx rollup -cw");
 task("scss", "npx sass src/styles:dist/css --watch --color");
@@ -28,17 +26,23 @@ parallel("dev", ["server", "rollup", "scss"]);
 series("default", ["dev"]);
 ```
 
+Run tasks from the command line:
+
 ```sh
+# CLI
+
 $ devo [taskname]
 ```
 
-If no task name is provided, devo will look for a task named `deafult`. Given the manifest file above, this will run the default task.
+If no task name is provided, devo will look for a task named `default`.
 
 ### Composing Tasks
 
-Tasks are composablea in `series` or `parallel`. These methods are also composable with each other. This means you can build complex process chains.
+Tasks are composable in `series` or `parallel`. These methods are also composable with each other. This means you can build complex process chains.
 
 ```ts
+import { task, parallel, series } from "https://cdn.jsdelivr.net/gh/iamnathanj/devo@v1.0.0/mod.ts";
+
 task("task1", "echo 1");
 task("task2", "echo 2");
 task("task3", "echo 3");
