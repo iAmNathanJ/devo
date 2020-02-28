@@ -71,6 +71,21 @@ series("composed", [
 ]);
 ```
 
+### Watching
+
+Devo currently supports watching on `task`s only. Simply call `task(...).watch()` to recursively watch `Deno.cwd()` for changes to `.ts`, `.tsx`, and `.js` files.
+Or, you can set explicit [WatchOptions].
+
+```ts
+task("server", SERVER).watch({
+  batch: true,
+  root: `${Deno.cwd()}/src`,
+  walkOptions: {
+    exts: [".ts", ".tsx", ".js", "jsx", "json"]
+  }
+});
+```
+
 ### Manually Running Tasks
 
 If you install the `devo` executable, then it will take care of running tasks from your `devo.ts` file. If you prefer, you can call `.run` on any of the devo exports. This means you can use any file name you want or create your own runner.
@@ -96,3 +111,5 @@ await composed.run();
 ```
 
 [Deno]: https://deno.land/
+[WatchOptions]: https://github.com/iAmNathanJ/fs-poll#options
+[fs-poll]: https://github.com/iAmNathanJ/fs-poll
