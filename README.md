@@ -5,7 +5,7 @@ A task runner for [Deno].
 ## Install
 
 ```sh
-$ deno install --allow-run --allow-read devo https://cdn.jsdelivr.net/gh/iamnathanj/devo@v1.0.0/cli.ts
+$ deno install --allow-run --allow-read devo https://denopkg.com/iamnathanj/devo@v1.1.0/cli.ts
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ Create a task file in the root of your project called `devo.ts`.
 ```ts
 // devo.ts
 
-import { task, parallel, series } from "https://cdn.jsdelivr.net/gh/iamnathanj/devo@v1.0.0/mod.ts";
+import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.1.0/mod.ts";
 
 task("rollup", "npx rollup -cw");
 task("scss", "npx sass src/styles:dist/css --watch --color");
@@ -41,7 +41,7 @@ If no task name is provided, devo will look for a task named `default`.
 Tasks are composable in `series` or `parallel`. These methods are also composable with each other. This means you can build complex process chains.
 
 ```ts
-import { task, parallel, series } from "https://cdn.jsdelivr.net/gh/iamnathanj/devo@v1.0.0/mod.ts";
+import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.1.0/mod.ts";
 
 task("task1", "echo 1");
 task("task2", "echo 2");
