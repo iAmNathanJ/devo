@@ -6,11 +6,6 @@ type InstallOptions = {
   denoInstallArgs?: string[];
 };
 
-const argsMap = {
-  "d": "--dir",
-  "dir": "--dir"
-};
-
 async function installLocal({
   name,
   url,
@@ -18,7 +13,7 @@ async function installLocal({
 }: InstallOptions) {
   await Deno.mkdir(DENO_BIN, { recursive: true });
   await Deno.run({
-    args: ["deno", "install", "--dir", DENO_BIN, ...denoInstallArgs, name, url]
+    args: ["deno", "install", ...denoInstallArgs, "--dir", DENO_BIN, name, url]
   }).status();
 }
 
