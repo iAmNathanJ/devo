@@ -28,7 +28,7 @@ async function cli() {
 }
 
 async function runTask(task: string) {
-  await import(join("file://", Deno.cwd(), "devo.ts")).catch(e => {
+  await import(`file://${join(Deno.cwd(), "devo.ts")}`).catch(e => {
     console.error(colors.red("Error loading devo.ts file"));
     console.error(e);
   });
