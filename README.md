@@ -1,47 +1,51 @@
 # `devo`
 
-A task runner for [Deno].
+Run tasks in [Deno]. Supports serial and parallel execution.
 
-## Install
+## CLI
+
+### install
 
 ```sh
-$ deno install --allow-run --allow-read devo https://denopkg.com/iamnathanj/devo@v1.1.0/cli.ts
+$ deno install --allow-run --allow-read --allow-write --allow-env devo https://denopkg.com/iamnathanj/devo@v1.2.0/cli.ts
 ```
 
+### run
+```sh
+$ devo [taskname]
+```
+
+If no task name is provided, devo will look for a task named `default`. (see below)
+
 ## Usage
+
+### Creating Tasks
 
 Create a task file in the root of your project called `devo.ts`.
 
 ```ts
 // devo.ts
+import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.2.0/mod.ts";
 
-import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.1.0/mod.ts";
+const JS = "rollup -c";
+const CSS = "sass src/styles:dist/css --watch";
+const SERVER = "deno --allow-net server.ts";
 
-task("rollup", "npx rollup -cw");
-task("scss", "npx sass src/styles:dist/css --watch --color");
-task("server", "deno --allow-net --allow-read server.ts");
+task("rollup", JS);
+task("scss", CSS);
+task("server", SERVER);
 
 parallel("dev", ["server", "rollup", "scss"]);
 
 series("default", ["dev"]);
 ```
 
-Run tasks from the command line:
-
-```sh
-# CLI
-
-$ devo [taskname]
-```
-
-If no task name is provided, devo will look for a task named `default`.
-
 ### Composing Tasks
 
 Tasks are composable in `series` or `parallel`. These methods are also composable with each other. This means you can build complex process chains.
 
 ```ts
-import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.1.0/mod.ts";
+import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.2.0/mod.ts";
 
 task("task1", "echo 1");
 task("task2", "echo 2");
@@ -84,6 +88,34 @@ task("server", SERVER).watch({
     exts: [".ts", ".tsx", ".js", "jsx", "json"]
   }
 });
+```
+
+### Deno (and node) Executables
+
+Just like `npm` scripts, `devo` will augment your `PATH` to run executables. You can use `devo install` to install executables locally to `<project>/.deno/bin`. This way, you can invoke them from tasks without a global install.
+
+```sh
+$ devo install foo <https://module.url/foo.ts> [permissions]
+```
+
+```ts
+// devo.ts
+import { task } from "https://denopkg.com/iamnathanj/devo@v1.2.0/mod.ts";
+
+task("run-foo", "foo");
+```
+
+Similarly, devo will add `<project>/node_modules/.bin` to your path if you want to run a node based task.
+
+```sh
+$ npm i -D @babel/core @babel/cli
+```
+
+```ts
+// devo.ts
+import { task } from "https://denopkg.com/iamnathanj/devo@v1.2.0/mod.ts";
+
+task("js", "babel src -d dist");
 ```
 
 ### Manually Running Tasks
