@@ -7,7 +7,7 @@ Run tasks in [Deno]. Supports serial and parallel execution.
 ### install
 
 ```sh
-$ deno install --allow-run --allow-read --allow-write --allow-env devo https://denopkg.com/iamnathanj/devo@v1.2.0/cli.ts
+$ deno install -A devo https://denopkg.com/iamnathanj/devo@v1.2.0/cli.ts
 ```
 
 ### run
