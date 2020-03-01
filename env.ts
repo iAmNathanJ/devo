@@ -26,7 +26,7 @@ function prepareEnv() {
   const PATH = getPathKey();
   const SEP = getPathSeparator();
 
-  Deno.env()[PATH] = [Deno.env()[PATH], DENO_BIN, NODE_BIN].join(SEP);
+  Deno.env()[PATH] = [DENO_BIN, NODE_BIN, Deno.env()[PATH]].join(SEP);
 }
 
 export { prepareEnv, DENO_BIN };
