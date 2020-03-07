@@ -1,4 +1,5 @@
 import { DENO_BIN } from "./env.ts";
+import { runDenoInstaller } from "./deno-installer.ts";
 
 type InstallOptions = {
   name: string;
@@ -7,6 +8,17 @@ type InstallOptions = {
 };
 
 async function installLocal({
+  name,
+  url,
+  denoInstallArgs = []
+}: InstallOptions) {
+  if (name === "deno") {
+    return runDenoInstaller();
+  }
+  return installModule({ name, url, denoInstallArgs });
+}
+
+async function installModule({
   name,
   url,
   denoInstallArgs = []

@@ -1,6 +1,7 @@
 import { join } from "./deps.ts";
 
-const DENO_BIN = join(Deno.cwd(), ".deno/bin");
+const DENO_DIR = join(Deno.cwd(), ".deno");
+const DENO_BIN = join(DENO_DIR, "bin");
 const NODE_BIN = join(Deno.cwd(), "node_modules/.bin");
 
 function getPathKey() {
