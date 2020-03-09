@@ -1,0 +1,11 @@
+{
+  "name": "devo",
+  "version": "1.4.0",
+  "signGitTag": true,
+  "replaceVersion": [
+    "README.md"
+  ],
+  "deno": {
+    "version": "0.35.0"
+  }
+}
