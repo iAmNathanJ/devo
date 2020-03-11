@@ -3,27 +3,8 @@ import { DENO_BIN } from "./env.ts";
 
 const { build, mkdir, writeFile } = Deno;
 
-async function runDenoInstaller() {
-  // todo: handle dynamic regex construction to enable -v --version arg
-  // current match will find the latest version from release page
-  console.log("fetching deno releases");
-
-  const releasePage = await fetch("https://github.com/denoland/deno/releases")
-    .then(r => r.text())
-    .catch(e => {
-      console.error("error fetching deno releases", e);
-      Deno.exit(1);
-    });
-
-  const releaseRegex = /"\/denoland\/deno\/releases\/tag\/(?<version>.*)"/g;
-  const match = releaseRegex.exec(releasePage);
-
-  if (!match?.groups?.version) {
-    console.error("not found: latest deno version");
-    Deno.exit(1);
-  }
-
-  const { version } = match.groups;
+async function runDenoInstaller(targetVersion: string) {
+  const version = targetVersion ? v(targetVersion) : await findLatestVersion();
   const os = build.os === "mac" ? "osx" : build.os;
   const ext = build.os === "win" ? "zip" : "gz";
   const resource =
@@ -55,6 +36,31 @@ async function runDenoInstaller() {
 
   console.log(colors.dim("==="));
   console.log(colors.green(`deno ${version} `) + colors.dim(`${exe}`));
+}
+
+async function findLatestVersion(): Promise<string> {
+  console.log("finding latest deno release");
+
+  const releasePage = await fetch("https://github.com/denoland/deno/releases")
+    .then(r => r.text())
+    .catch(e => {
+      console.error("error fetching deno releases", e);
+      Deno.exit(1);
+    });
+
+  const releaseRegex = /"\/denoland\/deno\/releases\/tag\/(?<version>.*)"/g;
+  const match = releaseRegex.exec(releasePage);
+
+  if (!match?.groups?.version) {
+    console.error("not found: latest deno version");
+    Deno.exit(1);
+  }
+
+  return match.groups.version;
+}
+
+function v(version: string) {
+  return version.startsWith("v") ? version : `v${version}`;
 }
 
 export { runDenoInstaller };

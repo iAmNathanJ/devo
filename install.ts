@@ -7,13 +7,13 @@ type InstallOptions = {
   denoInstallArgs?: string[];
 };
 
-async function installLocal({
+async function install({
   name,
   url,
   denoInstallArgs = []
 }: InstallOptions) {
   if (name === "deno") {
-    return runDenoInstaller();
+    return runDenoInstaller(url);
   }
   return installModule({ name, url, denoInstallArgs });
 }
@@ -29,4 +29,4 @@ async function installModule({
   }).status();
 }
 
-export { installLocal };
+export { install };

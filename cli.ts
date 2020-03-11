@@ -1,6 +1,6 @@
 import { join, parse, colors } from "./deps.ts";
 import { prepareEnv } from "./env.ts";
-import { installLocal } from "./install.ts";
+import { install } from "./install.ts";
 import { cache } from "./runnable.ts";
 
 if (import.meta.main) {
@@ -19,7 +19,7 @@ async function cli() {
     case "install":
       const [name, url] = subCommands;
       const denoInstallArgs = Deno.args.slice(3);
-      await installLocal({ name, url, denoInstallArgs });
+      await install({ name, url, denoInstallArgs });
       break;
     default:
       await runTask(command);
