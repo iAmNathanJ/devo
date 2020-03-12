@@ -17,12 +17,12 @@ async function cli() {
       await runTask("default");
       break;
     case "install":
-      const [name, url] = subCommands;
+      const [name, url] = subCommands.map(s => s.toString());
       const denoInstallArgs = Deno.args.slice(3);
       await install({ name, url, denoInstallArgs });
       break;
     default:
-      await runTask(command);
+      await runTask(command.toString());
       break;
   }
 }
