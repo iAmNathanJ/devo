@@ -7,7 +7,7 @@ Run tasks in [Deno]. Supports serial and parallel execution.
 ### install
 
 ```sh
-$ deno install -A devo https://denopkg.com/iamnathanj/devo@v1.6.0/cli.ts
+$ deno install -A devo https://denopkg.com/iamnathanj/devo@v1.7.0/cli.ts
 ```
 
 ### run
@@ -25,7 +25,7 @@ Create a task file in the root of your project called `devo.ts`.
 
 ```ts
 // devo.ts
-import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.6.0/mod.ts";
+import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.7.0/mod.ts";
 
 const JS = "rollup -c";
 const CSS = "sass src/styles:dist/css --watch";
@@ -45,7 +45,7 @@ series("default", ["dev"]);
 Tasks are composable in `series` or `parallel`. These methods are also composable with each other. This means you can build complex process chains.
 
 ```ts
-import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.6.0/mod.ts";
+import { task, parallel, series } from "https://denopkg.com/iamnathanj/devo@v1.7.0/mod.ts";
 
 task("task1", "echo 1");
 task("task2", "echo 2");
@@ -100,7 +100,7 @@ $ devo install foo <https://module.url/foo.ts> [permissions]
 
 ```ts
 // devo.ts
-import { task } from "https://denopkg.com/iamnathanj/devo@v1.6.0/mod.ts";
+import { task } from "https://denopkg.com/iamnathanj/devo@v1.7.0/mod.ts";
 
 task("run-foo", "foo");
 ```
@@ -113,7 +113,7 @@ $ npm i -D @babel/core @babel/cli
 
 ```ts
 // devo.ts
-import { task } from "https://denopkg.com/iamnathanj/devo@v1.6.0/mod.ts";
+import { task } from "https://denopkg.com/iamnathanj/devo@v1.7.0/mod.ts";
 
 task("js", "babel src -d dist");
 ```

@@ -1,6 +1,6 @@
 {
   "name": "devo",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "signGitTag": true,
   "replaceVersion": [
     "README.md"
